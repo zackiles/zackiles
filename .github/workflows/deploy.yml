@@ -56,11 +56,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: |
-            index.svg
-            index.gif
-            index.html
-            README.md
+          path: .
 
       - name: Deploy to GitHub Pages
         id: deployment
