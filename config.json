@@ -1,3 +1,4 @@
+// Example of configuration with json instead of composer.ts
 {
   "width": 800,
   "height": 200,
