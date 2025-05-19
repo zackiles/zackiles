@@ -1,8 +1,7 @@
 name: Build and Deploy to GitHub Pages
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
 
@@ -18,9 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Only run if the PR was merged (not simply closed)
   build-and-deploy:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     environment:
       name: github-pages
