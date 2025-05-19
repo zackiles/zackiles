@@ -1,0 +1,56 @@
+{
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.config": "./deno.json",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "editor.detectIndentation": false,
+  "editor.indentSize": 2,
+  "editor.insertSpaces": true,
+  "[markdown][typescript][javascript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno",
+    "editor.formatOnSave": true
+  },
+  "files.associations": {
+    "repomix.config.json": "json5"
+  },
+  "search.exclude": {
+    "**/.cursor": true
+  },
+  "cSpell.words": [
+    "deno",
+    "typeof",
+    "zackiles",
+    "zacharyiles",
+    "asynciterable",
+    "webgpu",
+    "Iles",
+    "onclose",
+    "Zipkin",
+    "parentbased",
+    "tracestate",
+    "traceparent",
+    "MILLIS",
+    "msvc",
+    "denoland",
+    "dotenv",
+    "swapfile",
+    "hiberfil",
+    "dconf",
+    "keyrings",
+    "dbus",
+    "dockerenv",
+    "fseventsd",
+    "modelcontextprotocol",
+    "rwxr",
+    "pids",
+    "USERPROFILE",
+    "unvalidated",
+    "somevalue",
+    "testuser",
+    "zack",
+    "tspans",
+    "whois"
+  ],
+}

@@ -1,0 +1,42 @@
+{
+  "tasks": {
+    "install:playwright": "npx playwright install --with-deps --no-shell",
+    "test": "DENO_ENV=test deno run -A build.ts --config config.json --output temp/test.html",
+    "dev": "DENO_ENV=development deno run -A --watch=build.ts,config.json build.ts --config config.json --output temp/development.html",
+    "build": "deno run -A build.ts --config config.json --output index.html"
+  },
+  "imports": {
+    "@libs/xml": "jsr:@libs/xml@^6.0.4",
+    "@std/assert": "jsr:@std/assert@1",
+    "@std/fmt": "jsr:@std/fmt@1",
+    "@std/fs": "jsr:@std/fs@1",
+    "@std/http": "jsr:@std/http@1",
+    "@std/path": "jsr:@std/path@1",
+    "@std/cli": "jsr:@std/cli@1",
+    "@qnighy/dedent": "jsr:@qnighy/dedent@^0.1.2",
+    "@std/semver": "jsr:@std/semver@1",
+    "@std/streams": "jsr:@std/streams@1",
+    "@std/testing": "jsr:@std/testing@1",
+    "@std/text": "jsr:@std/text@1",
+    "playwright": "npm:playwright@^1.52.0"
+  },
+  "lint": {
+    "include": [
+      "*.md",
+      "*.ts"
+    ]
+  },
+  "fmt": {
+    "lineWidth": 100,
+    "useTabs": false,
+    "indentWidth": 2,
+    "singleQuote": true,
+    "proseWrap": "preserve",
+    "semiColons": false,
+    "include": [
+      "deno.json",
+      "*.md",
+      "*.ts"
+    ]
+  }
+}

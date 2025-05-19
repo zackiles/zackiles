@@ -1,0 +1,19 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Always Test After Changing `build.ts`
+**IMPORTANT**: This project is for generating dynamic SVGs that you will have to test whenever you modify logic that would change the SVG in [build.ts](mdc:build.ts). To test you will run the command `deno task test` which does the following:
+
+- Runs [build.ts](mdc:build.ts) 
+- Uses playwright to render the SVG
+- Takes two screenshots a fews seconds a part
+- Saves the screenshots to `temp/frame1.png` and `temp/frame2.png`
+
+Once [build.ts](mdc:build.ts) exits after generating the screenshots, you will inspect them to see if your animation is correct. If it is, you can consider the test as passiong
+
+## Final Notes
+- Inspect to see how the following components of the SVG rendered: `ShellPrompt`, `TerminalStep`, and the general styling set in `Config`
+- Compare rendering of the SVG components to the user config in [config.json](mdc:config.json) 
+- Ensure the settings in [config.json](mdc:config.json) accurately reflect the animation a few seconds a part according to the steps and timing set in [config.json](mdc:config.json)
