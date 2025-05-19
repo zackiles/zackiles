@@ -1,30 +1,29 @@
 # Setup Your Own Animation
 
-Make your own terminal svg / gif!
+Create your own terminal SVG or GIF.
 
 ## Quick Start
 
-1. [Install Deno](https://docs.deno.com/runtime/getting_started/installation/) (If you haven't already)
-
+1. [Install Deno](https://docs.deno.com/runtime/getting_started/installation/) if you haven't already.
 2. Install ffmpeg:
 
 ```sh
 brew install ffmpeg
 ```
 
-3. Clone this repo and run this command in it:
+3. Clone this repository and run the following command:
 
 ```sh
 deno task install:playwright
 ```
 
-4. Edit either the Typescript or the JSON config and run:
+4. Edit either the TypeScript or JSON config and run:
 
 ```sh
 deno run -A build.ts --config examples/config.ts
 ```
 
-**That's it**. You should have the following in the same path:
+**That's it.** You should have the following files in the same path:
 
 - `index.html`
 - `index.svg`
@@ -34,48 +33,48 @@ Hack the planet.
 
 ## Configuring The Animation
 
-At a high-level, the core parts of the animation are broken down into "steps" and global configuration, and you can configure essentially every aspect of the entire animation in either a Typescript/Javascript or JSON file.
+Configure the animation using steps and global settings. You can configure every aspect of the animation in a TypeScript/JavaScript or JSON file.
 
-Once you've finished your configuration file you'll be ready to build your animation by passing the path of it to the builder using `--config`.
+After finishing your configuration file, build your animation by passing its path to the builder using `--config`.
 
 > [!TIP]
-> Full examples both types of configuration can be found in `examples/`. Explanations of each option is explained below.
+> Full examples of both configuration types are in `examples/`. Explanations of each option are below.
 
 ### Step Configuration
 
-Configure one or as many steps as you'd like. All steps share a similar set of options:
+Configure one or more steps. All steps share similar options:
 
-- `terminalLines`: what shows in the terminal for that step (e.g a list of directories)
-- `shellPrompt`: what shows as the terminal prompt for that step (e.g `user@machine`)
-- `command`: what is being typed into the terminal for that step. NOTE: this is typically the command that you'd expect the **next** step to show the result of in the terminal lines
-- `timings`: a set of timings for that step (e.g typing speed, holding time etc)
+- `terminalLines`: Shows in the terminal for that step (e.g., a list of directories).
+- `shellPrompt`: Shows as the terminal prompt for that step (e.g., `user@machine`).
+- `command`: Typed into the terminal for that step. Typically, this is the command that the **next** step shows the result of in the terminal lines.
+- `timings`: A set of timings for that step (e.g., typing speed, holding time).
 
 ### Global Configuration
 
-The entire animation uses these global configuration options:
+The animation uses these global configuration options:
 
-- `name`: The name (without extension) to be used for the build files (i.e `{name}.html`, `{name}.svg`, `{name}.gif`)
+- `name`: The name (without extension) for the build files (i.e., `{name}.html`, `{name}.svg`, `{name}.gif`).
   - Default: 'animation'
-- `outputDirectory`: Path of where to build the files to. NOTE: This will be overridden if the flag `--output-directory` is provided to the builder
+- `outputDirectory`: Path to build the files. This is overridden if the `--output-directory` flag is provided to the builder.
   - Default: current working directory
-- `outputTypes`: An array of strings for all build file types you'd like. Options are `html`, `svg`, `gif`.
+- `outputTypes`: An array of strings for all build file types. Options are `html`, `svg`, `gif`.
   - Default: All types are built
-- `embed`: When html is provided as a build type, this chooses whether the svg should be embedded in the html or built as a separate file and linked in it with an img tag. NOTE: setting embed to true will force an svg to be built even if you didn't include it in outputTypes.
+- `embed`: When `html` is a build type, this chooses whether the SVG should be embedded in the HTML or built as a separate file and linked with an `img` tag. Setting `embed` to true forces an SVG to be built even if not included in `outputTypes`.
   - Default: false
 - `width`: The total width of the SVG animation in pixels. Determines the horizontal size of the terminal window.
   - Default: 800
 - `height`: The total height of the SVG animation in pixels. Determines the vertical size of the terminal window.
-  - Default 200
+  - Default: 200
 - `fontFamily`: The font used for rendering text in the terminal. Defaults to monospace fonts like "Courier New" for a classic terminal look.
   - Default: 'Courier New, monospace'
 - `fontSize`: The size of the text in pixels. Controls the readability and visual scale of the terminal text.
   - Default: 18
-- `loop`: A boolean flag that determines whether the animation should repeat indefinitely. When `true`, the animation will restart after completing all steps.
+- `loop`: A boolean flag that determines whether the animation should repeat indefinitely. When `true`, the animation restarts after completing all steps.
   - Default: true
 
-### Using Javascript/Typescript
+### Using JavaScript/TypeScript
 
-Your file can export a default plain object (see Using JSON for an example of what that object would look like), OR it can leverage the handy `Composer` class to fluently build a config:
+Your file can export a default plain object (see Using JSON for an example of what that object would look like), or it can leverage the `Composer` class to fluently build a config:
 
 ```ts
 import { Composer } from '../composer.ts'
@@ -143,7 +142,7 @@ const composer = new Composer({
 export default composer.toJSON()
 ```
 
-The Composer API offers several key advantages:
+The Composer API offers several advantages:
 
 - Type checking and autocompletion in your IDE
 - Chainable interface for building complex animations
@@ -152,7 +151,7 @@ The Composer API offers several key advantages:
 
 ## Using JSON(c)
 
-For a simpler approach, you can define your configuration directly in JSON or JSONC (JSON with comments):
+For a simpler approach, define your configuration directly in JSON or JSONC (JSON with comments):
 
 ```json
 {
@@ -223,8 +222,6 @@ The structure includes:
 - Each step includes terminal lines, prompt configuration, command text, and timing
 
 > [!TIP]
-> When using JSONC, you can add comments to document your configuration choices,
-> which is especially helpful for complex animations.
+> When using JSONC, add comments to document your configuration choices, which is especially helpful for complex animations.
 
-Save your configuration to a file with `.json` or `.jsonc` extension, then run the
-build command passing your file with the `--config` flag.
+Save your configuration to a file with a `.json` or `.jsonc` extension, then run the build command passing your file with the `--config` flag.
