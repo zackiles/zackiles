@@ -3,16 +3,15 @@
  *
  * Exports the same configuration as config.json, but built using the Composer API.
  */
-import { Composer } from './composer.ts'
+import { Composer } from '../composer.ts'
 
 // Create configuration using the Composer fluent API
 const composer = new Composer({
+  name: 'example',
   width: 800,
   height: 200,
   fontFamily: 'Courier New, monospace',
   fontSize: 18,
-  loop: true,
-  name: 'index',
   outputTypes: ['html', 'svg', 'gif'],
   embed: true,
   colors: {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<svg width="100%" height="100%" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" data-duration="11.5s">
+<svg width="100%" height="100%" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" data-duration="15s">
   <rect width="800" height="200" fill="black" />
   
 <g id="terminal-window-lines-0" opacity="0">
@@ -31,7 +31,12 @@
         <text x="20" y="100" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">/LANGUAGES</text>
         <text x="20" y="120" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">Typescript, Go, Rust</text>
   <animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="5.5s" fill="freeze" />
-  
+  <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.9;1" dur="0.2s" begin="15s" fill="freeze" repeatCount="indefinite" />
+</g>
+
+<g id="command-1" opacity="1">
+  <text x="185" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">c<animate attributeName="opacity" from="0" to="1" begin="6.00s" dur="0.01s" fill="freeze"/></text><text x="193.8" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">l<animate attributeName="opacity" from="0" to="1" begin="6.20s" dur="0.01s" fill="freeze"/></text><text x="202.6" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">e<animate attributeName="opacity" from="0" to="1" begin="6.40s" dur="0.01s" fill="freeze"/></text><text x="211.4" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">a<animate attributeName="opacity" from="0" to="1" begin="6.60s" dur="0.01s" fill="freeze"/></text><text x="220.2" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">r<animate attributeName="opacity" from="0" to="1" begin="6.80s" dur="0.01s" fill="freeze"/></text>
+  <animate attributeName="opacity" values="1;0" dur="0.2s" begin="15.00s" fill="freeze" repeatCount="indefinite"/>
 </g>
 
 </svg>

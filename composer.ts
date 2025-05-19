@@ -30,6 +30,7 @@
  * @see {@link TerminalStep} for the step configuration structure
  */
 import type { Config, ShellPrompt, TerminalStep } from './types.ts'
+import { defaultConfig, defaultStep } from './defaults.ts'
 
 /**
  * Builder class for creating terminal animation steps with a fluent interface
@@ -38,10 +39,10 @@ import type { Config, ShellPrompt, TerminalStep } from './types.ts'
  */
 class StepBuilder {
   private step: Partial<TerminalStep> = {
-    terminalLines: [],
-    command: '',
-    shellPrompt: { user: '', host: '', symbol: '' },
-    timing: { start: 0, perChar: 0.2, hold: 1 },
+    terminalLines: defaultStep.terminalLines,
+    command: defaultStep.command,
+    shellPrompt: defaultStep.shellPrompt,
+    timing: defaultStep.timing,
   }
 
   constructor(private composer: Composer) {}
@@ -118,7 +119,7 @@ class StepBuilder {
  * Composer class for building terminal animation configurations
  * with a fluent, chainable API
  */
-export class Composer {
+class Composer {
   private config: Partial<Config>
 
   /**
@@ -129,19 +130,14 @@ export class Composer {
   constructor(initialConfig: Partial<Config> = {}) {
     // Set default values
     this.config = {
-      width: 800,
-      height: 200,
-      fontFamily: 'Courier New, monospace',
-      fontSize: 18,
+      width: defaultConfig.width,
+      height: defaultConfig.height,
+      fontFamily: defaultConfig.fontFamily,
+      fontSize: defaultConfig.fontSize,
       colors: {
-        bg: 'black',
-        terminalLines: '#00FF00',
-        user: '#00ffff',
-        host: '#ffaa00',
-        symbol: '#ffffff',
-        command: '#ffffff',
+        ...defaultConfig.colors,
       },
-      charWidth: 11,
+      charWidth: defaultConfig.charWidth,
       steps: [],
       ...initialConfig,
     }
@@ -190,3 +186,5 @@ export class Composer {
     await Deno.writeTextFile(path, json)
   }
 }
+
+export { Composer, StepBuilder }

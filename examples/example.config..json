@@ -1,10 +1,11 @@
-// Example of configuration with json instead of composer.ts
-
 {
+  "name": "example",
   "width": 800,
   "height": 200,
   "fontFamily": "Courier New, monospace",
   "fontSize": 18,
+  "outputTypes": ["html", "svg", "gif"],
+  "embed": false,
   "colors": {
     "bg": "black",
     "terminalLines": "#00FF00",
@@ -19,15 +20,13 @@
     {
       "terminalLines": [
         "/PROJECTS",
-        "deno-kit",
-        "luna-ai",
-        "cursor-config",
-        "cursor-workbench",
-        "cdp-proxy-interceptor",
-        "git-vault"
+        "project-1",
+        "project-2",
+        "project-3",
+        "project-4"
       ],
       "shellPrompt": {
-        "user": "zack",
+        "user": "user",
         "host": "machine",
         "symbol": ":~$"
       },
@@ -41,13 +40,13 @@
     {
       "terminalLines": [
         "/COUNTRY & CITY",
-        "Canada",
+        "Taiwan, Taipei",
         "",
         "/LANGUAGES",
         "Typescript, Go, Rust"
       ],
       "shellPrompt": {
-        "user": "zack",
+        "user": "user",
         "host": "machine",
         "symbol": ":~$"
       },
@@ -59,4 +58,4 @@
       }
     }
   ]
-} 
+}

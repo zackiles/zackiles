@@ -2,14 +2,14 @@
  * Types for terminal animator
  */
 
-export type ShellPrompt = {
+type ShellPrompt = {
   user: string
   host: string
   symbol: string
   path?: string
 }
 
-export type TerminalStep = {
+type TerminalStep = {
   terminalLines: string[]
   shellPrompt: ShellPrompt
   command: string
@@ -25,11 +25,18 @@ export type TerminalStep = {
   }
 }
 
-export type Config = {
+type OutputType = 'html' | 'svg' | 'gif'
+
+type Config = {
   width: number
   height: number
   fontFamily: string
   fontSize: number
+  loop: boolean
+  name?: string
+  outputDirectory?: string
+  outputTypes?: OutputType[]
+  embed?: boolean
   colors: {
     bg: string
     terminalLines: string
@@ -42,3 +49,5 @@ export type Config = {
   charWidth: number
   steps: TerminalStep[]
 }
+
+export type { Config, OutputType, ShellPrompt, TerminalStep }

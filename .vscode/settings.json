@@ -51,6 +51,9 @@
     "testuser",
     "zack",
     "tspans",
-    "whois"
+    "whois",
+    "paletteuse",
+    "palettegen",
+    "-lavfi"
   ],
 }

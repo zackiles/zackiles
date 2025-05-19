@@ -1,3 +1,17 @@
+# General
 .env
 temp
 .DS_Store
+
+# Ignore all HTML, SVG, GIF, and PNG files
+*.html
+*.svg
+*.gif
+*.png
+
+# But keep ones that start with "index"
+# These are the only ones that go to production
+!index.html
+!index.svg
+!index.gif
+!index.png
