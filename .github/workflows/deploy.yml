@@ -58,6 +58,8 @@ jobs:
 
       - name: Build GitHub Graph
         run: deno task build:graph
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Verify Generated Files
         run: |
