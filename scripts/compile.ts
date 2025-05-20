@@ -39,7 +39,7 @@ async function compile({ binPath }: CompileOptions) {
   // Ensure the output directory exists
   await ensureDir(binPath)
 
-  const entryPoint = 'build.ts'
+  const entryPoint = 'src/build.ts'
   const resources = ['deno.json']
 
   console.log('Compiling binaries for all platforms...')

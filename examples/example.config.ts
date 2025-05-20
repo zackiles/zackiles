@@ -3,7 +3,7 @@
  *
  * Exports the same configuration as config.json, but built using the Composer API.
  */
-import { Composer } from '../composer.ts'
+import { Composer } from '../src/composer.ts'
 
 // Create configuration using the Composer fluent API
 const composer = new Composer({

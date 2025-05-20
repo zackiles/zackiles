@@ -4,6 +4,9 @@ temp/
 bin/
 .DS_Store
 
+# Github stats statefile
+github_stats_state
+
 # Ignore all HTML, SVG, GIF, and PNG files
 *.html
 *.svg
@@ -12,7 +15,8 @@ bin/
 
 # But keep ones that start with "index"
 # These are the only ones that go to production
-!index.html
-!index.svg
-!index.gif
-!index.png
+# NOTE: Disabled for now
+#!index.html
+#!index.svg
+#!index.gif
+#!index.png

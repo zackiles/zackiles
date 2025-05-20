@@ -1,0 +1,21 @@
+# Binary files tracked by Git LFS
+*.png filter=lfs diff=lfs merge=lfs -text
+*.gif filter=lfs diff=lfs merge=lfs -text
+
+# Specific files we want to track with LFS
+/index.gif filter=lfs diff=lfs merge=lfs -text
+/graph.png filter=lfs diff=lfs merge=lfs -text
+/index.png filter=lfs diff=lfs merge=lfs -text
+
+# Text files with specific handling
+*.html text eol=lf
+*.svg text eol=lf
+*.md text eol=lf
+*.ts text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+
+# Ensure configuration files use LF
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.editorconfig text eol=lf

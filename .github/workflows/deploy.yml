@@ -7,7 +7,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -26,6 +26,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Git LFS
+        run: |
+          git lfs install
+          git lfs pull
 
       - name: Setup Deno
         uses: denoland/setup-deno@v2
@@ -46,18 +53,30 @@ jobs:
       - name: Install Playwright
         run: deno task install:playwright
 
-      - name: Build artifacts
-        run: deno task build
+      - name: Build Terminal Animation
+        run: deno task build:terminal
 
-      - name: Setup Pages
+      - name: Build GitHub Graph
+        run: deno task build:graph
+
+      - name: Verify Generated Files
+        run: |
+          ls -l index.html graph.png index.gif
+
+      # Configure GitHub Pages with enablement to ensure it's enabled
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v4
+        with:
+          enablement: true
 
+      # Upload the entire directory as a Pages artifact
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
           path: .
 
+      # Deploy the artifact to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
