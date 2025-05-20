@@ -84,7 +84,10 @@ function computeTotalAnimationTime(config: Config): number {
 }
 
 async function takeScreenshot(html: string, config: Config) {
-  const browser = await chromium.launch()
+  const browser = await chromium.launch({
+    headless: true,
+    channel: 'chromium-headless-shell'
+  })
   const page = await browser.newPage()
   await page.setContent(html)
 

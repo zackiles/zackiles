@@ -43,6 +43,12 @@ jobs:
       - name: Setup FFmpeg
         uses: FedericoCarboni/setup-ffmpeg@v3
 
+      - name: Debug Playwright Cache Location
+        run: |
+          echo "Current user home: $HOME"
+          echo "Playwright cache location: $HOME/.cache/ms-playwright"
+          ls -la $HOME/.cache || echo "Cache directory does not exist yet"
+
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         with:
@@ -53,9 +59,13 @@ jobs:
 
       - name: Install Playwright
         run: |
-          set -x
+          echo "Installing Playwright browsers..."
           deno task install:playwright
-          set +x
+          npx playwright --version
+          echo "Installed browsers:"
+          find ~/.cache/ms-playwright -type f -name "*shell*" | sort
+          echo "Cache directory size:"
+          du -sh ~/.cache/ms-playwright
 
       - name: Build Terminal Animation
         run: deno task build:terminal
