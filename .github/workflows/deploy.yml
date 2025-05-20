@@ -10,6 +10,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  actions: read
 
 # Allow only one concurrent deployment
 concurrency:
@@ -59,7 +60,7 @@ jobs:
       - name: Build GitHub Graph
         run: deno task build:graph
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
 
       - name: Verify Generated Files
         run: |
