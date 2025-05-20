@@ -92,6 +92,40 @@ The animation uses these global configuration options:
   - `symbol`: Color for prompt symbol.
   - `command`: Color for typed commands.
 
+#### Step Settings
+
+- `terminalLines`: An array of strings representing the output lines displayed in the terminal for a specific step. These lines simulate command output or other terminal content.
+  - Example: `["/PROJECTS", "deno-kit", "luna-ai", "cursor-config"]`
+- `shellPrompt`: Configures the shell prompt display for the step:
+  - `user`: Username displayed in the prompt (e.g., "your-name")
+  - `host`: Hostname displayed in the prompt (e.g., "machine")
+  - `symbol`: Prompt symbol (e.g., ":~$", "$", ">")
+  - `path`: Optional working directory path to display in the prompt
+- `command`: The command to be typed into the terminal for the step. This is typically the command that generates the output shown in `terminalLines`.
+- `timing`: Controls the animation timing for the step:
+  - `start`: Time in seconds from the beginning of the entire animation when this step begins. This is a cumulative time that takes into account the duration of previous steps and their transitions.
+  - `perChar`: Time in seconds taken to type each character of the command
+  - `hold`: Time in seconds to pause after the command finishes typing
+  - `fadeIn`: Optional fade-in duration in seconds for smooth transitions between steps
+- `position`: Optional positioning overrides for fine-tuning the layout:
+  - `promptX`: X coordinate for the prompt start (default: 20)
+  - `commandX`: X coordinate for the command start (default: promptX + promptWidth + 5)
+
+> [!IMPORTANT]
+> Timing Calculation Example:
+>
+> - Step 1 starts at 0s, takes 5 seconds to complete
+> - Step 2 has `start: 6`, takes 8 seconds to complete
+> - Total animation length will be approximately 14 seconds (6s + 8s)
+>
+> The `start` time ensures steps don't overlap:
+>
+> - If Step 1 actually takes longer than 5 seconds, the `start` of Step 2 will be automatically adjusted
+> - Step transitions and loop timing are also factored into the total animation duration
+
+> [!TIP]
+> The step settings allow granular control over each moment in your terminal animation, from the displayed content to the precise timing of typing and transitions.
+
 ### Using JavaScript/TypeScript
 
 Your file can export a default plain object (see Using JSON for an example of what that object would look like), or it can leverage the `Composer` class to fluently build a config:
