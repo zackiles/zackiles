@@ -52,7 +52,10 @@ jobs:
             playwright-${{ runner.os }}-
 
       - name: Install Playwright
-        run: deno task install:playwright
+        run: |
+          set -x
+          deno task install:playwright
+          set +x
 
       - name: Build Terminal Animation
         run: deno task build:terminal
