@@ -57,6 +57,8 @@
     "-lavfi",
     "xlink",
     "tspan",
-    "SMIL"
+    "SMIL",
+    "refactorer",
+    "bugfixer"
   ],
 }
