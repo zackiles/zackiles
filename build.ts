@@ -7,6 +7,7 @@ import { ensureDir } from '@std/fs/ensure-dir'
 import { parse as parseJSON } from '@std/jsonc'
 import type { Config, ShellPrompt, TerminalStep } from './types.ts'
 import { applyDefaults } from './defaults.ts'
+import TIMINGS from './timings.ts'
 
 const environment = Deno.env.get('DENO_ENV') || 'production'
 const animationStartFrame = join(Deno.cwd(), 'temp', 'frame1.png')
@@ -55,11 +56,11 @@ function computeTotalAnimationTime(config: Config): number {
     totalDuration = Math.max(totalDuration, stepEndTime)
 
     if (index < config.steps.length - 1) {
-      totalDuration += 0.5
+      totalDuration += TIMINGS.STEP_TRANSITION
     }
   })
 
-  return totalDuration + (config.loop ? 5 : 1)
+  return totalDuration + (config.loop ? TIMINGS.LOOP_EXTRA_TIME : TIMINGS.NON_LOOP_EXTRA_TIME)
 }
 
 async function takeScreenshot(html: string, config: Config) {
@@ -70,7 +71,7 @@ async function takeScreenshot(html: string, config: Config) {
   const totalDuration = computeTotalAnimationTime(config)
   const firstStepStart = config.steps[0].timing.start * 1000
 
-  await page.waitForTimeout(firstStepStart)
+  await page.waitForTimeout(TIMINGS.SCREENSHOT_INITIAL_DELAY)
   await page.screenshot({ path: animationStartFrame })
 
   const secondScreenshotTime = Math.max(0, totalDuration * 1000 - 1000) - firstStepStart
@@ -112,13 +113,13 @@ function buildSVG(
     const animateStart = index === 0 ? '0s' : `${
       config.steps[index - 1].timing.start +
       config.steps[index - 1].command.length * config.steps[index - 1].timing.perChar +
-      config.steps[index - 1].timing.hold + 0.5
+      config.steps[index - 1].timing.hold + TIMINGS.STEP_TRANSITION
     }s`
 
     const fadeOutAnimation = !isLastStep
       ? `<animate attributeName="opacity" values="1;1;0" keyTimes="0;0.9;1" dur="0.2s" begin="${fadeOutAt}s" fill="freeze" />`
       : shouldLoop
-      ? `<animate attributeName="opacity" values="1;1;0" keyTimes="0;0.9;1" dur="0.2s" begin="${fadeOutAt}s" fill="freeze" repeatCount="indefinite" />`
+      ? `<animate attributeName="opacity" values="1;1;0" keyTimes="0;0.9;1" dur="0.2s" begin="${fadeOutAt}s" fill="freeze" id="last-fade" />`
       : ''
 
     return dedent`
@@ -132,13 +133,15 @@ function buildSVG(
         }</text>`
       ).join('\n        ')
     }
-        <animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="${animateStart}" fill="freeze" />
+        <animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="${animateStart}" fill="freeze" ${
+      index === 0 && shouldLoop ? 'id="first-fade" restart="always"' : ''
+    } />
         ${fadeOutAnimation}
       </g>
     `
   }
 
-  const renderPrompt = (prompt: ShellPrompt, x = 20): string => {
+  const renderPrompt = (prompt: ShellPrompt, x = 20, stepIndex = 0): string => {
     const pathTspan = prompt.path
       ? `<tspan style="fill: ${config.colors.path || config.colors.host};">:${
         escapeXML(prompt.path)
@@ -148,7 +151,7 @@ function buildSVG(
     return dedent`
       <text x="${x}" y="${
       config.height - 5
-    }" style="font-family: ${config.fontFamily}; font-size: ${config.fontSize}px;">
+    }" id="prompt-${stepIndex}" style="font-family: ${config.fontFamily}; font-size: ${config.fontSize}px;">
         <tspan style="fill: ${config.colors.user};">${
       escapeXML(prompt.user)
     }</tspan><tspan style="fill: ${config.colors.symbol};">@</tspan><tspan style="fill: ${config.colors.host};">${
@@ -176,13 +179,21 @@ function buildSVG(
 
     for (let i = 0; i < command.length; i++) {
       const charX = xStart + commandPadding + (i * (config.charWidth * charWidthFactor))
+
+      // When it's the first command and looping is enabled, add special IDs for restarting animations
+      const animId = id === 'command-0' && shouldLoop
+        ? `id="command-char-${i}-anim" restart="always"`
+        : id === 'command-0'
+        ? `id="command-${i}-anim"`
+        : ''
+
       tspans += `<text x="${charX}" y="${
         config.height - 5
       }" opacity="0" style="font-family: ${config.fontFamily}; font-size: ${config.fontSize}px; fill: ${config.colors.command};">${
         escapeXML(command[i])
       }<animate attributeName="opacity" from="0" to="1" begin="${
         time.toFixed(2)
-      }s" dur="0.01s" fill="freeze"/></text>`
+      }s" dur="${TIMINGS.CHAR_ANIMATION_DURATION}s" fill="freeze" ${animId}/></text>`
       time += timing.perChar
     }
 
@@ -191,8 +202,10 @@ function buildSVG(
       timing.start + 0.1,
     )
 
-    const extendedFadeOut = isLastStep && shouldLoop ? fadeOut + 5 : fadeOut
-    const loopAttr = isLastStep && shouldLoop ? ' repeatCount="indefinite"' : ''
+    const extendedFadeOut = isLastStep && shouldLoop
+      ? fadeOut + TIMINGS.LAST_STEP_EXTRA_TIME
+      : fadeOut
+    const loopAttr = isLastStep && shouldLoop ? ' id="last-command-fade"' : ''
 
     return dedent`
       <g id="${id}" opacity="1">
@@ -210,7 +223,8 @@ function buildSVG(
     if (index > 0) {
       const prevStep = config.steps[index - 1]
       const prevEndTime = prevStep.timing.start +
-        (prevStep.command.length * prevStep.timing.perChar) + prevStep.timing.hold + 0.5
+        (prevStep.command.length * prevStep.timing.perChar) + prevStep.timing.hold +
+        TIMINGS.STEP_TRANSITION
       if (step.timing.start < prevEndTime) step.timing.start = prevEndTime
     }
 
@@ -219,23 +233,116 @@ function buildSVG(
     const commandX = step.position?.commandX ?? (promptX + promptWidth + 5)
 
     const fadeOutAt = isLastStep && config.loop
-      ? step.timing.start + (step.command.length * step.timing.perChar) + step.timing.hold + 5
+      ? step.timing.start + (step.command.length * step.timing.perChar) + step.timing.hold +
+        TIMINGS.LAST_STEP_EXTRA_TIME
       : step.timing.start + (step.command.length * step.timing.perChar) + step.timing.hold
 
     content += renderLines(step.terminalLines, fadeOutAt, index, isLastStep)
 
     if (!isLastStep) {
-      content += renderPrompt(step.shellPrompt, promptX)
+      content += renderPrompt(step.shellPrompt, promptX, index)
       content += renderCommand(step.command, step.timing, commandX, `command-${index}`)
     } else if (config.loop) {
+      content += renderPrompt(step.shellPrompt, promptX, index)
       content += renderCommand(step.command, step.timing, commandX, `command-${index}`, true)
     }
   })
 
+  let loopAnimationTrigger = ''
+  if (shouldLoop) {
+    const cycleTime = currentTime.toFixed(2)
+    // Use cycle-controller.end to signify a cycle completion and the start of reset operations.
+    // TIMINGS.EPSILON_DELAY ensures a slight pause for event processing if needed.
+    const cycleRestartEventTrigger = `cycle-controller.end + ${TIMINGS.EPSILON_DELAY.toFixed(2)}s`
+
+    loopAnimationTrigger = `
+    <!-- Main animation cycle controller -->
+    <animate
+      id="cycle-controller"
+      attributeName="visibility" <!-- Can be any attribute, visibility is semantic -->
+      values="visible;visible" <!-- Keeps it from visually changing -->
+      dur="${cycleTime}s"
+      begin="0s" <!-- Starts immediately -->
+      repeatCount="indefinite"
+    />
+
+    <!-- === GLOBAL RESETS triggered by the start of a new cycle === -->
+
+    <!-- 1. Reset first terminal lines group (#terminal-window-lines-0) -->
+    <!-- Make it briefly invisible then visible to allow its internal #first-fade to replay. -->
+    <animate xlink:href="#terminal-window-lines-0" attributeName="opacity"
+             begin="${cycleRestartEventTrigger}"
+             values="0;0;1" keyTimes="0;${(TIMINGS.EPSILON_DELAY / 2).toFixed(3)};1"
+             dur="${
+      (TIMINGS.RESET_TERMINAL_DURATION + TIMINGS.EPSILON_DELAY / 2).toFixed(3)
+    }s" fill="freeze" />
+    <!-- Explicitly re-schedule the #first-fade animation for the first terminal lines. -->
+    <set xlink:href="#first-fade" attributeName="begin" to="${cycleRestartEventTrigger}" />
+
+    <!-- 2. Hide all other terminal lines groups (from step 2 onwards) -->
+    ${
+      config.steps.slice(1).map((_, i) => `
+    <animate xlink:href="#terminal-window-lines-${i + 1}" attributeName="opacity"
+             begin="${cycleRestartEventTrigger}" to="0" dur="0.001s" fill="freeze" />`).join(
+        '\n    ',
+      )
+    }
+
+    <!-- 3. Reset first prompt visibility (#prompt-0) -->
+    <animate xlink:href="#prompt-0" attributeName="opacity"
+             begin="${cycleRestartEventTrigger}" to="1" dur="${
+      TIMINGS.RESET_PROMPT_DURATION.toFixed(2)
+    }s" fill="freeze" />
+    <!-- 4. Hide all other prompts (from step 2 onwards) -->
+    ${
+      config.steps.slice(1).map((_, i) => `
+    <animate xlink:href="#prompt-${i + 1}" attributeName="opacity"
+             begin="${cycleRestartEventTrigger}" to="0" dur="0.001s" fill="freeze" />`).join(
+        '\n    ',
+      )
+    }
+
+    <!-- 5. Reset first command group visibility (#command-0) -->
+    <animate xlink:href="#command-0" attributeName="opacity"
+             begin="${cycleRestartEventTrigger}" to="1" dur="${
+      TIMINGS.RESET_PROMPT_DURATION.toFixed(2)
+    }s" fill="freeze" />
+    <!-- 6. Hide all other command groups (from step 2 onwards) -->
+    ${
+      config.steps.slice(1).map((_, i) => `
+    <animate xlink:href="#command-${i + 1}" attributeName="opacity"
+             begin="${cycleRestartEventTrigger}" to="0" dur="0.001s" fill="freeze" />`).join(
+        '\n    ',
+      )
+    }
+
+    <!-- === Re-triggering character animations for the first command (#command-0) === -->
+    <!-- The character animations (command-char-X-anim) have 'restart="always"'.
+         Their 'begin' times are originally absolute. We use <set> to re-schedule them
+         relative to the start of the new cycle. -->
+    ${
+      config.steps[0].command.split('').map((_, i) => {
+        // Original begin time for this character relative to the start of the SVG's timeline
+        const charOriginalAbsoluteBeginTime = config.steps[0].timing.start +
+          (i * config.steps[0].timing.perChar)
+        return `
+    <set xlink:href="#command-char-${i}-anim" attributeName="begin"
+         to="${cycleRestartEventTrigger} + ${charOriginalAbsoluteBeginTime.toFixed(2)}s" />`
+      }).join('\n    ')
+    }
+    `
+  }
+
+  // Add additional metadata for better SMIL animation support
+  const svgAttributes = shouldLoop
+    ? `width="100%" height="100%" viewBox="0 0 ${config.width} ${config.height}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-duration="${currentTime}s" preserveAspectRatio="xMidYMid meet"`
+    : `width="100%" height="100%" viewBox="0 0 ${config.width} ${config.height}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-duration="${currentTime}s"`
+
   const svgContent = dedent`
-    <svg width="100%" height="100%" viewBox="0 0 ${config.width} ${config.height}" xmlns="http://www.w3.org/2000/svg" data-duration="${currentTime}s">
+    <svg ${svgAttributes}>
       <rect width="${config.width}" height="${config.height}" fill="${config.colors.bg}" />
       ${content}
+      ${loopAnimationTrigger}
     </svg>`
 
   const fullSvg = `<?xml version="1.0" encoding="UTF-8"?>\n${svgContent}`
@@ -243,6 +350,37 @@ function buildSVG(
   const html = config.embed
     ? dedent`<!DOCTYPE html>
       <html style="width: 100%; height: 100%;">
+        <head>
+          <style>
+            body { margin: 0; padding: 0; overflow: hidden; background: #000; }
+            svg { display: block; max-width: 100%; height: auto; }
+          </style>
+          ${
+      shouldLoop
+        ? `<script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const svg = document.querySelector('svg');
+              const duration = parseFloat(svg.getAttribute('data-duration')) * 1000;
+
+              function restartAnimation() {
+                // Force a repaint to restart animations
+                svg.style.display = 'none';
+                // requestAnimationFrame ensures the 'none' display is processed before 'block'
+                requestAnimationFrame(() => {
+                  setTimeout(() => {
+                    svg.style.display = 'block';
+                  }, 10); // Small delay for rendering
+                });
+              }
+
+              // Set up infinite looping with a buffer (e.g., 200ms)
+              // This makes JS a fallback if SMIL fails, giving SMIL priority.
+              setInterval(restartAnimation, duration + 200);
+            });
+          </script>`
+        : ''
+    }
+        </head>
         <body width="100%" height="100%">
           ${svgContent}
         </body>
@@ -258,7 +396,7 @@ function buildSVG(
 }
 
 async function renderGif(outputBase: string, htmlPath: string, config: Config) {
-  const fps = 30
+  const fps = TIMINGS.GIF_FPS
   const totalTime = computeTotalAnimationTime(config)
   const frameCount = Math.floor(totalTime * fps)
   const framesDir = join(Deno.cwd(), 'temp', 'frames')
@@ -350,7 +488,14 @@ async function renderGif(outputBase: string, htmlPath: string, config: Config) {
 
   try {
     await Deno.remove(framesDir, { recursive: true })
-    await Deno.remove(palettePath)
+
+    // Check if palette file exists before removal
+    try {
+      await Deno.stat(palettePath)
+      await Deno.remove(palettePath)
+    } catch {
+      // File doesn't exist, silently ignore
+    }
   } catch (error) {
     console.warn('Error during cleanup:', error)
   }
@@ -421,15 +566,17 @@ async function main() {
     if (environment === 'test' || environment === 'development') {
       try {
         const configPath = Deno.args[1]
-        if (!configPath) throw new Error('No config path provided for test/dev mode')
+        if (configPath) {
+          const config = await loadConfig(configPath)
+          const htmlPath = `${join(Deno.cwd(), config.name || 'animation')}.html`
 
-        const config = await loadConfig(configPath)
-        const htmlPath = join(Deno.cwd(), config.name || 'animation') + '.html'
-
-        await takeScreenshot(await Deno.readTextFile(htmlPath), config)
-        console.log('Screenshots taken', { animationStartFrame, animationEndFrame })
+          await takeScreenshot(await Deno.readTextFile(htmlPath), config)
+          console.log('Screenshots taken', { animationStartFrame, animationEndFrame })
+        } else {
+          console.error('No config path provided for test/dev mode')
+        }
       } catch (error) {
-        console.error(error)
+        console.warn('Error in test/dev mode:', error)
       }
     }
 
@@ -439,16 +586,7 @@ async function main() {
   }
 }
 
+// This is a script and not an importable module
 if (import.meta.main) {
   main()
-}
-
-export {
-  buildSVG,
-  computeTotalAnimationTime,
-  escapeXML,
-  loadConfig,
-  main,
-  renderGif,
-  takeScreenshot,
 }

@@ -1,5 +1,5 @@
 ---
-description: Use for git commit messages
+description: When running git commit
 globs:
 alwaysApply: false
 category: collaboration
@@ -27,7 +27,7 @@ All commit messages follow **Conventional Commits** standard when generating or 
 - **test**: Adding or improving tests.
 - **chore**: Build process, dependencies, or auxiliary tools.
 - **ci**: CI/CD config or script changes.
-- **build**: Affects the build system or external dependencies 
+- **build**: Affects the build system or external dependencies
 
 ---
 
@@ -56,8 +56,8 @@ feat(users-account.ts): added user authentication.
 ### Example B (Change History)
 
 **Staged Changes**:
-- Created validation schema in `src/validation/product-schema.ts` using Zod  
-- Integrated schema into product API endpoint in `src/routes/products.ts`  
+- Created validation schema in `src/validation/product-schema.ts` using Zod
+- Integrated schema into product API endpoint in `src/routes/products.ts`
 - Added unit tests in `test/validation/product-schema.test.ts`
 
 **Output 4 (GOOD)**:
@@ -74,8 +74,8 @@ feat(ProductSchema.ts): created validation for product input
 ## Example C (Change History)
 
 **Staged Changes**:
-- Migrated `src/db/index.ts` to use `postgres-js` instead of `pg`  
-- Updated connection pooling and transaction handling logic  
+- Migrated `src/db/index.ts` to use `postgres-js` instead of `pg`
+- Updated connection pooling and transaction handling logic
 - Removed legacy `pg` adapter and related types
 
 **Output 5 (GOOD)**:

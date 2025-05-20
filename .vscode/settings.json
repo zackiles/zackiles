@@ -54,6 +54,7 @@
     "whois",
     "paletteuse",
     "palettegen",
-    "-lavfi"
+    "-lavfi",
+    "xlink"
   ],
 }
