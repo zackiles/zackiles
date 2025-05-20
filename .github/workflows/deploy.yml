@@ -60,7 +60,7 @@ jobs:
       - name: Build GitHub Graph
         run: deno task build:graph
         env:
-          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Verify Generated Files
         run: |
