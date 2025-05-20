@@ -2,7 +2,7 @@
   "tasks": {
     "stats": "deno run -A github-stats.ts",
     "graph": "deno run -A github-graph.ts --gh-user zackiles --output-directory=./",
-    "install:playwright": "npx playwright install --with-deps --no-shell",
+    "install:playwright": "npx playwright install chromium --with-deps --no-shell",
     "test": "DENO_ENV=test deno run -A src/build.ts --config config.ts --output temp/test.html",
     "test:github": "deno test -A test/github-stats.test.ts",
     "dev": "DENO_ENV=development deno run -A --watch=src/**/*.ts,config.ts --config config.ts --output temp/development.html",
@@ -11,6 +11,7 @@
     "build": "deno task build:terminal && deno task build:graph",
     "compile": "deno run -A scripts/compile.ts --bin-path=bin/"
   },
+  "lock": true,
   "imports": {
     "@octokit/graphql": "npm:@octokit/graphql@^9.0.0",
     "@octokit/types": "npm:@octokit/types@^14.0.0",
