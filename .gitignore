@@ -1,6 +1,7 @@
 # General
 .env
-temp
+temp/
+bin/
 .DS_Store
 
 # Ignore all HTML, SVG, GIF, and PNG files

@@ -4,35 +4,240 @@
     <style>
       body { margin: 0; padding: 0; overflow: hidden; background: #000; }
       svg { display: block; max-width: 100%; height: auto; }
+      
+    /* Vector effect inheritance */
+    svg * { vector-effect: inherit; }
+
+    /* Keyframes */
+    @keyframes fade-0 {
+  0% { opacity: 0; }
+  0% { opacity: 0; }
+  1.5385% { opacity: 1; }
+  38.4615% { opacity: 1; }
+  40% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes fade-cmd-0 {
+  0% { opacity: 1; }
+  38.4615% { opacity: 1; }
+  40% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes type-0-0 {
+  0% { opacity: 0; }
+  15.3746% { opacity: 0; }
+  15.3846% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-0-1 {
+  0% { opacity: 0; }
+  16.9131% { opacity: 0; }
+  16.9231% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-0-2 {
+  0% { opacity: 0; }
+  18.4515% { opacity: 0; }
+  18.4615% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-0-3 {
+  0% { opacity: 0; }
+  19.99% { opacity: 0; }
+  20% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-0-4 {
+  0% { opacity: 0; }
+  21.5285% { opacity: 0; }
+  21.5385% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes fade-1 {
+  0% { opacity: 0; }
+  42.3077% { opacity: 0; }
+  43.8462% { opacity: 1; }
+  100% { opacity: 1; }
+  101.5385% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes fade-cmd-1 {
+  0% { opacity: 1; }
+  100% { opacity: 1; }
+  101.5385% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes type-1-0 {
+  0% { opacity: 0; }
+  46.1438% { opacity: 0; }
+  46.1538% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-1-1 {
+  0% { opacity: 0; }
+  47.6823% { opacity: 0; }
+  47.6923% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-1-2 {
+  0% { opacity: 0; }
+  49.2208% { opacity: 0; }
+  49.2308% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-1-3 {
+  0% { opacity: 0; }
+  50.7592% { opacity: 0; }
+  50.7692% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-1-4 {
+  0% { opacity: 0; }
+  52.2977% { opacity: 0; }
+  52.3077% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+    /* Rules */
+    .line-0 { animation: fade-0 13000ms linear infinite; }
+.prompt-0 { opacity: 1; }
+.cmd-group-0 { animation: fade-cmd-0 13000ms linear infinite; }
+.cmd-0-0 { animation: type-0-0 13000ms steps(1, end) infinite forwards; }
+.cmd-0-1 { animation: type-0-1 13000ms steps(1, end) infinite forwards; }
+.cmd-0-2 { animation: type-0-2 13000ms steps(1, end) infinite forwards; }
+.cmd-0-3 { animation: type-0-3 13000ms steps(1, end) infinite forwards; }
+.cmd-0-4 { animation: type-0-4 13000ms steps(1, end) infinite forwards; }
+.line-1 { animation: fade-1 13000ms linear infinite; }
+.prompt-1 { opacity: 1; }
+.cmd-group-1 { animation: fade-cmd-1 13000ms linear infinite; }
+.cmd-1-0 { animation: type-1-0 13000ms steps(1, end) infinite forwards; }
+.cmd-1-1 { animation: type-1-1 13000ms steps(1, end) infinite forwards; }
+.cmd-1-2 { animation: type-1-2 13000ms steps(1, end) infinite forwards; }
+.cmd-1-3 { animation: type-1-3 13000ms steps(1, end) infinite forwards; }
+.cmd-1-4 { animation: type-1-4 13000ms steps(1, end) infinite forwards; }
+  
     </style>
-    <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              const svg = document.querySelector('svg');
-              const duration = parseFloat(svg.getAttribute('data-duration')) * 1000;
-
-              function restartAnimation() {
-                // Force a repaint to restart animations
-                svg.style.display = 'none';
-                // requestAnimationFrame ensures the 'none' display is processed before 'block'
-                requestAnimationFrame(() => {
-                  setTimeout(() => {
-                    svg.style.display = 'block';
-                  }, 10); // Small delay for rendering
-                });
-              }
-
-              // Set up infinite looping with a buffer (e.g., 200ms)
-              // This makes JS a fallback if SMIL fails, giving SMIL priority.
-              setInterval(restartAnimation, duration + 200);
-            });
-          </script>
   </head>
   <body width="100%" height="100%">
     
-<svg width="100%" height="100%" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" data-duration="10s" preserveAspectRatio="xMidYMid meet">
+<svg width="100%" height="100%" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" data-duration="13s" preserveAspectRatio="xMidYMid meet">
+  <style>
+  
+    /* Vector effect inheritance */
+    svg * { vector-effect: inherit; }
+
+    /* Keyframes */
+    @keyframes fade-0 {
+  0% { opacity: 0; }
+  0% { opacity: 0; }
+  1.5385% { opacity: 1; }
+  38.4615% { opacity: 1; }
+  40% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes fade-cmd-0 {
+  0% { opacity: 1; }
+  38.4615% { opacity: 1; }
+  40% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes type-0-0 {
+  0% { opacity: 0; }
+  15.3746% { opacity: 0; }
+  15.3846% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-0-1 {
+  0% { opacity: 0; }
+  16.9131% { opacity: 0; }
+  16.9231% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-0-2 {
+  0% { opacity: 0; }
+  18.4515% { opacity: 0; }
+  18.4615% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-0-3 {
+  0% { opacity: 0; }
+  19.99% { opacity: 0; }
+  20% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-0-4 {
+  0% { opacity: 0; }
+  21.5285% { opacity: 0; }
+  21.5385% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes fade-1 {
+  0% { opacity: 0; }
+  42.3077% { opacity: 0; }
+  43.8462% { opacity: 1; }
+  100% { opacity: 1; }
+  101.5385% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes fade-cmd-1 {
+  0% { opacity: 1; }
+  100% { opacity: 1; }
+  101.5385% { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes type-1-0 {
+  0% { opacity: 0; }
+  46.1438% { opacity: 0; }
+  46.1538% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-1-1 {
+  0% { opacity: 0; }
+  47.6823% { opacity: 0; }
+  47.6923% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-1-2 {
+  0% { opacity: 0; }
+  49.2208% { opacity: 0; }
+  49.2308% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-1-3 {
+  0% { opacity: 0; }
+  50.7592% { opacity: 0; }
+  50.7692% { opacity: 1; }
+  100% { opacity: 1; }
+}
+@keyframes type-1-4 {
+  0% { opacity: 0; }
+  52.2977% { opacity: 0; }
+  52.3077% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+    /* Rules */
+    .line-0 { animation: fade-0 13000ms linear infinite; }
+.prompt-0 { opacity: 1; }
+.cmd-group-0 { animation: fade-cmd-0 13000ms linear infinite; }
+.cmd-0-0 { animation: type-0-0 13000ms steps(1, end) infinite forwards; }
+.cmd-0-1 { animation: type-0-1 13000ms steps(1, end) infinite forwards; }
+.cmd-0-2 { animation: type-0-2 13000ms steps(1, end) infinite forwards; }
+.cmd-0-3 { animation: type-0-3 13000ms steps(1, end) infinite forwards; }
+.cmd-0-4 { animation: type-0-4 13000ms steps(1, end) infinite forwards; }
+.line-1 { animation: fade-1 13000ms linear infinite; }
+.prompt-1 { opacity: 1; }
+.cmd-group-1 { animation: fade-cmd-1 13000ms linear infinite; }
+.cmd-1-0 { animation: type-1-0 13000ms steps(1, end) infinite forwards; }
+.cmd-1-1 { animation: type-1-1 13000ms steps(1, end) infinite forwards; }
+.cmd-1-2 { animation: type-1-2 13000ms steps(1, end) infinite forwards; }
+.cmd-1-3 { animation: type-1-3 13000ms steps(1, end) infinite forwards; }
+.cmd-1-4 { animation: type-1-4 13000ms steps(1, end) infinite forwards; }
+  
+  </style>
   <rect width="800" height="200" fill="black" />
   
-<g id="terminal-window-lines-0" opacity="0">
+<g class="line-0">
   <text x="20" y="40" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">/PROJECTS</text>
         <text x="20" y="60" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">deno-kit</text>
         <text x="20" y="80" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">luna-ai</text>
@@ -40,101 +245,32 @@
         <text x="20" y="120" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">cursor-workbench</text>
         <text x="20" y="140" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">cdp-proxy-interceptor</text>
         <text x="20" y="160" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">git-vault</text>
-  <animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0s" fill="freeze" id="first-fade" restart="always" />
-  <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.9;1" dur="0.2s" begin="5s" fill="freeze" />
 </g>
 
-<text x="20" y="195" id="prompt-0" style="font-family: Courier New, monospace; font-size: 18px;">
+<text x="20" y="195" class="prompt-0" style="font-family: Courier New, monospace; font-size: 18px;">
   <tspan style="fill: #00ffff;">zack</tspan><tspan style="fill: #ffffff;">@</tspan><tspan style="fill: #ffaa00;">machine</tspan><tspan style="fill: #ffffff;">:~$</tspan>
 </text>
 
-<g id="command-0" opacity="1">
-  <text x="185" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">w<animate attributeName="opacity" from="0" to="1" begin="2.00s" dur="0.01s" fill="freeze" id="command-char-0-anim" restart="always"/></text><text x="193.8" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">h<animate attributeName="opacity" from="0" to="1" begin="2.20s" dur="0.01s" fill="freeze" id="command-char-1-anim" restart="always"/></text><text x="202.6" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">o<animate attributeName="opacity" from="0" to="1" begin="2.40s" dur="0.01s" fill="freeze" id="command-char-2-anim" restart="always"/></text><text x="211.4" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">i<animate attributeName="opacity" from="0" to="1" begin="2.60s" dur="0.01s" fill="freeze" id="command-char-3-anim" restart="always"/></text><text x="220.2" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">s<animate attributeName="opacity" from="0" to="1" begin="2.80s" dur="0.01s" fill="freeze" id="command-char-4-anim" restart="always"/></text>
-  <animate attributeName="opacity" values="1;0" dur="0.2s" begin="5.00s" fill="freeze"/>
+<g class="cmd-group-0">
+  <text x="185" y="195" class="cmd-0-0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">w</text><text x="193.8" y="195" class="cmd-0-1" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">h</text><text x="202.6" y="195" class="cmd-0-2" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">o</text><text x="211.4" y="195" class="cmd-0-3" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">i</text><text x="220.2" y="195" class="cmd-0-4" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">s</text>
 </g>
 
-<g id="terminal-window-lines-1" opacity="0">
+<g class="line-1">
   <text x="20" y="40" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">/COUNTRY &amp; CITY</text>
         <text x="20" y="60" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">Canada</text>
         <text x="20" y="80" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;"></text>
         <text x="20" y="100" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">/LANGUAGES</text>
         <text x="20" y="120" style="font-family: Courier New, monospace; font-size: 18px; fill: #00FF00;">Typescript, Go, Rust</text>
-  <animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="5.5s" fill="freeze"  />
-  <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.9;1" dur="0.2s" begin="11s" fill="freeze" id="last-fade" />
 </g>
 
-<text x="20" y="195" id="prompt-1" style="font-family: Courier New, monospace; font-size: 18px;">
+<text x="20" y="195" class="prompt-1" style="font-family: Courier New, monospace; font-size: 18px;">
   <tspan style="fill: #00ffff;">zack</tspan><tspan style="fill: #ffffff;">@</tspan><tspan style="fill: #ffaa00;">machine</tspan><tspan style="fill: #ffffff;">:~$</tspan>
 </text>
 
-<g id="command-1" opacity="1">
-  <text x="185" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">c<animate attributeName="opacity" from="0" to="1" begin="6.00s" dur="0.01s" fill="freeze" /></text><text x="193.8" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">l<animate attributeName="opacity" from="0" to="1" begin="6.20s" dur="0.01s" fill="freeze" /></text><text x="202.6" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">e<animate attributeName="opacity" from="0" to="1" begin="6.40s" dur="0.01s" fill="freeze" /></text><text x="211.4" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">a<animate attributeName="opacity" from="0" to="1" begin="6.60s" dur="0.01s" fill="freeze" /></text><text x="220.2" y="195" opacity="0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">r<animate attributeName="opacity" from="0" to="1" begin="6.80s" dur="0.01s" fill="freeze" /></text>
-  <animate attributeName="opacity" values="1;0" dur="0.2s" begin="11.00s" fill="freeze" id="last-command-fade"/>
+<g class="cmd-group-1">
+  <text x="185" y="195" class="cmd-1-0" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">c</text><text x="193.8" y="195" class="cmd-1-1" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">l</text><text x="202.6" y="195" class="cmd-1-2" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">e</text><text x="211.4" y="195" class="cmd-1-3" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">a</text><text x="220.2" y="195" class="cmd-1-4" style="font-family: Courier New, monospace; font-size: 18px; fill: #ffffff;">r</text>
 </g>
 
-  
-    <!-- Main animation cycle controller -->
-    <animate
-      id="cycle-controller"
-      attributeName="visibility" <!-- Can be any attribute, visibility is semantic -->
-      values="visible;visible" <!-- Keeps it from visually changing -->
-      dur="10.00s"
-      begin="0s" <!-- Starts immediately -->
-      repeatCount="indefinite"
-    />
-
-    <!-- === GLOBAL RESETS triggered by the start of a new cycle === -->
-
-    <!-- 1. Reset first terminal lines group (#terminal-window-lines-0) -->
-    <!-- Make it briefly invisible then visible to allow its internal #first-fade to replay. -->
-    <animate xlink:href="#terminal-window-lines-0" attributeName="opacity"
-             begin="cycle-controller.end + 0.05s"
-             values="0;0;1" keyTimes="0;0.025;1"
-             dur="0.125s" fill="freeze" />
-    <!-- Explicitly re-schedule the #first-fade animation for the first terminal lines. -->
-    <set xlink:href="#first-fade" attributeName="begin" to="cycle-controller.end + 0.05s" />
-
-    <!-- 2. Hide all other terminal lines groups (from step 2 onwards) -->
-    
-    <animate xlink:href="#terminal-window-lines-1" attributeName="opacity"
-             begin="cycle-controller.end + 0.05s" to="0" dur="0.001s" fill="freeze" />
-
-    <!-- 3. Reset first prompt visibility (#prompt-0) -->
-    <animate xlink:href="#prompt-0" attributeName="opacity"
-             begin="cycle-controller.end + 0.05s" to="1" dur="0.01s" fill="freeze" />
-    <!-- 4. Hide all other prompts (from step 2 onwards) -->
-    
-    <animate xlink:href="#prompt-1" attributeName="opacity"
-             begin="cycle-controller.end + 0.05s" to="0" dur="0.001s" fill="freeze" />
-
-    <!-- 5. Reset first command group visibility (#command-0) -->
-    <animate xlink:href="#command-0" attributeName="opacity"
-             begin="cycle-controller.end + 0.05s" to="1" dur="0.01s" fill="freeze" />
-    <!-- 6. Hide all other command groups (from step 2 onwards) -->
-    
-    <animate xlink:href="#command-1" attributeName="opacity"
-             begin="cycle-controller.end + 0.05s" to="0" dur="0.001s" fill="freeze" />
-
-    <!-- === Re-triggering character animations for the first command (#command-0) === -->
-    <!-- The character animations (command-char-X-anim) have 'restart="always"'.
-         Their 'begin' times are originally absolute. We use <set> to re-schedule them
-         relative to the start of the new cycle. -->
-    
-    <set xlink:href="#command-char-0-anim" attributeName="begin"
-         to="cycle-controller.end + 0.05s + 2.00s" />
-    
-    <set xlink:href="#command-char-1-anim" attributeName="begin"
-         to="cycle-controller.end + 0.05s + 2.20s" />
-    
-    <set xlink:href="#command-char-2-anim" attributeName="begin"
-         to="cycle-controller.end + 0.05s + 2.40s" />
-    
-    <set xlink:href="#command-char-3-anim" attributeName="begin"
-         to="cycle-controller.end + 0.05s + 2.60s" />
-    
-    <set xlink:href="#command-char-4-anim" attributeName="begin"
-         to="cycle-controller.end + 0.05s + 2.80s" />
-    
 </svg>
   </body>
 </html>

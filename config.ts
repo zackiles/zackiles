@@ -7,14 +7,19 @@ import { Composer } from './composer.ts'
 
 // Create configuration using the Composer fluent API
 const composer = new Composer({
+  name: 'index',
+  outputDirectory: '.',
+  outputTypes: ['html', 'svg', 'gif'],
+  embed: true,
+  useCss: true,
+  loop: true,
+
   width: 800,
   height: 200,
   fontFamily: 'Courier New, monospace',
+  charWidth: 11,
   fontSize: 18,
-  loop: true,
-  name: 'index',
-  outputTypes: ['html', 'svg', 'gif'],
-  embed: true,
+
   colors: {
     bg: 'black',
     terminalLines: '#00FF00',
@@ -24,7 +29,6 @@ const composer = new Composer({
     symbol: '#ffffff',
     command: '#ffffff',
   },
-  charWidth: 11,
 })
   .step
   .terminalLines([

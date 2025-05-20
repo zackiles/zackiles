@@ -55,6 +55,8 @@
     "paletteuse",
     "palettegen",
     "-lavfi",
-    "xlink"
+    "xlink",
+    "tspan",
+    "SMIL"
   ],
 }

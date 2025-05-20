@@ -30,6 +30,7 @@
     "jsr:@std/streams@^1.0.9": "1.0.9",
     "jsr:@std/testing@1": "1.0.12",
     "jsr:@std/text@1": "1.0.13",
+    "jsr:@zip-js/zip-js@^2.7.62": "2.7.62",
     "npm:playwright@^1.52.0": "1.52.0"
   },
   "jsr": {
@@ -128,6 +129,9 @@
     },
     "@std/text@1.0.13": {
       "integrity": "2191c90e6e667b0c3b7dea1cd082137580a93b3c136bad597c0212d5fe006eb1"
+    },
+    "@zip-js/zip-js@2.7.62": {
+      "integrity": "11cbe0746fa1e52e6e0a601c89ba97365f16e38a07f139b9d9914f988aec9081"
     }
   },
   "npm": {
@@ -160,6 +164,7 @@
       "jsr:@std/streams@1",
       "jsr:@std/testing@1",
       "jsr:@std/text@1",
+      "jsr:@zip-js/zip-js@^2.7.62",
       "npm:playwright@^1.52.0"
     ]
   }

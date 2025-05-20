@@ -1,11 +1,17 @@
 {
   "name": "example",
+  "outputDirectory": ".",
+  "outputTypes": ["html", "svg", "gif"],
+  "embed": true,
+  "useCss": true,
+  "loop": true,
+
   "width": 800,
   "height": 200,
   "fontFamily": "Courier New, monospace",
+  "charWidth": 11,
   "fontSize": 18,
-  "outputTypes": ["html", "svg", "gif"],
-  "embed": false,
+
   "colors": {
     "bg": "black",
     "terminalLines": "#00FF00",
@@ -15,7 +21,6 @@
     "symbol": "#ffffff",
     "command": "#ffffff"
   },
-  "charWidth": 11,
   "steps": [
     {
       "terminalLines": [

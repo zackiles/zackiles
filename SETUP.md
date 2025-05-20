@@ -53,24 +53,44 @@ Configure one or more steps. All steps share similar options:
 
 The animation uses these global configuration options:
 
+#### Basic Settings
+
 - `name`: The name (without extension) for the build files (i.e., `{name}.html`, `{name}.svg`, `{name}.gif`).
   - Default: 'animation'
 - `outputDirectory`: Path to build the files. This is overridden if the `--output-directory` flag is provided to the builder.
   - Default: current working directory
 - `outputTypes`: An array of strings for all build file types. Options are `html`, `svg`, `gif`.
-  - Default: All types are built
+  - Default: ['html', 'svg', 'gif']
 - `embed`: When `html` is a build type, this chooses whether the SVG should be embedded in the HTML or built as a separate file and linked with an `img` tag. Setting `embed` to true forces an SVG to be built even if not included in `outputTypes`.
   - Default: false
+- `useCss`: Determines the animation rendering method. When `true`, uses CSS animations for smooth, performant rendering. When `false`, falls back to alternative rendering techniques that may be less efficient or compatible. Recommended to keep as `true` for modern browsers and best performance.
+  - Default: true
+- `loop`: A boolean flag that determines whether the animation should repeat indefinitely. When `true`, the animation restarts after completing all steps.
+  - Default: true
+
+#### Display Settings
+
 - `width`: The total width of the SVG animation in pixels. Determines the horizontal size of the terminal window.
   - Default: 800
 - `height`: The total height of the SVG animation in pixels. Determines the vertical size of the terminal window.
   - Default: 200
 - `fontFamily`: The font used for rendering text in the terminal. Defaults to monospace fonts like "Courier New" for a classic terminal look.
   - Default: 'Courier New, monospace'
+- `charWidth`: The width of a single character in pixels. Used to calculate positioning for monospace layout.
+  - Default: 11
 - `fontSize`: The size of the text in pixels. Controls the readability and visual scale of the terminal text.
   - Default: 18
-- `loop`: A boolean flag that determines whether the animation should repeat indefinitely. When `true`, the animation restarts after completing all steps.
-  - Default: true
+
+#### Color Settings
+
+- `colors`: An object containing color values for different terminal elements:
+  - `bg`: Terminal background color.
+  - `terminalLines`: Color for terminal output lines.
+  - `user`: Color for username in prompt.
+  - `host`: Color for hostname in prompt.
+  - `path`: Color for path in prompt (optional, falls back to host color if not specified).
+  - `symbol`: Color for prompt symbol.
+  - `command`: Color for typed commands.
 
 ### Using JavaScript/TypeScript
 
@@ -81,12 +101,22 @@ import { Composer } from '../composer.ts'
 
 // Create configuration using the Composer fluent API
 const composer = new Composer({
-  // Optional: Override default global settings
+  // Basic settings
+  name: 'example',
+  outputDirectory: '.',
+  outputTypes: ['html', 'svg', 'gif'],
+  embed: true,
+  useCss: true,
+  loop: true,
+
+  // Display settings
   width: 800,
   height: 200,
   fontFamily: 'Courier New, monospace',
+  charWidth: 11,
   fontSize: 18,
-  loop: true, // Set to true for infinite animation loops
+
+  // Color settings
   colors: {
     bg: 'black',
     terminalLines: '#00FF00',
@@ -155,11 +185,19 @@ For a simpler approach, define your configuration directly in JSON or JSONC (JSO
 
 ```json
 {
+  "name": "example",
+  "outputDirectory": ".",
+  "outputTypes": ["html", "svg", "gif"],
+  "embed": true,
+  "useCss": true,
+  "loop": true,
+
   "width": 800,
   "height": 200,
   "fontFamily": "Courier New, monospace",
+  "charWidth": 11,
   "fontSize": 18,
-  "loop": true,
+
   "colors": {
     "bg": "black",
     "terminalLines": "#00FF00",
@@ -169,7 +207,6 @@ For a simpler approach, define your configuration directly in JSON or JSONC (JSO
     "symbol": "#ffffff",
     "command": "#ffffff"
   },
-  "charWidth": 11,
   "steps": [
     {
       "terminalLines": [

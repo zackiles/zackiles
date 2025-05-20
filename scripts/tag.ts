@@ -1,7 +1,7 @@
 #!/usr/bin/env -S deno run -A
 
 /**
- * @module scripts/tag
+ * @module tag
  *
  * Automates the release tagging process following semantic versioning.
  * Handles validation, git operations, and ensures proper tag sequencing.

@@ -10,6 +10,7 @@ export const defaultConfig = {
   name: 'animation',
   outputTypes: ['html', 'svg', 'gif'] as OutputType[],
   embed: false,
+  useCss: true,
   colors: {
     bg: 'black',
     terminalLines: '#00FF00',
@@ -50,6 +51,7 @@ function applyDefaults(configData: Record<string, unknown>): Config {
     outputDirectory: configData.outputDirectory as string | undefined,
     outputTypes: (configData.outputTypes as OutputType[]) ?? defaultConfig.outputTypes,
     embed: (configData.embed as boolean) ?? defaultConfig.embed,
+    useCss: (configData.useCss as boolean) ?? defaultConfig.useCss,
 
     // Color defaults
     colors: {
